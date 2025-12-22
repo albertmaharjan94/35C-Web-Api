@@ -4,7 +4,8 @@ import { Book } from "../types/book.type";
 import { IBookRepository, BookRepository } from "../repositories/book.repository";
 
 let bookRepository: IBookRepository = new BookRepository();
-
+// use Repository 
+// Select appropriate Repository (Mongo, Postgres, In-memory, etc.)
 export class BookService {
     createBook(book: CreateBookDTO) {
         // business logic
