@@ -10,7 +10,7 @@ console.log(process.env.PORT);
 
 import  bookRoutes  from './routes/book.route';
 import authRoutes from './routes/auth.route';
-
+import adminUserRoute from './routes/admin/user.route';
 const app: Application = express();
 // const PORT: number = 3000;
 
@@ -22,6 +22,8 @@ app.get('/', (req: Request, res: Response) => {
 });
 app.use('/api/books', bookRoutes);
 app.use('/api/auth', authRoutes);
+
+app.use('/api/admin/users', adminUserRoute);
 
 async function startServer() {
     await connectDB();
