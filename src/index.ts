@@ -24,6 +24,10 @@ app.use('/api/books', bookRoutes);
 app.use('/api/auth', authRoutes);
 
 app.use('/api/admin/users', adminUserRoute);
+// Task 26 DEC
+// create two api routes for admin to manage users
+// 1. GET /api/admin/users - get all users
+// 2. GET /api/admin/users/:userid - get user by id
 
 async function startServer() {
     await connectDB();
