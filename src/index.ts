@@ -3,6 +3,7 @@ import { connectDB } from './database/mongodb';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import { PORT } from './config';
+import cors from 'cors';
 dotenv.config();
 // can use env variables below this
 console.log(process.env.PORT);
@@ -12,6 +13,15 @@ import  bookRoutes  from './routes/book.route';
 import authRoutes from './routes/auth.route';
 import adminUserRoute from './routes/admin/user.route';
 const app: Application = express();
+
+let corsOptions = {
+    origin: ["http://localhost:3000", "http://localhost:3003"],
+    // list of domains allowed to access the server
+    // frontend domain/url
+}
+// origin: "*", // allow all domains
+app.use(cors(corsOptions));
+
 // const PORT: number = 3000;
 
 app.use(bodyParser.json());
