@@ -1,5 +1,5 @@
 import { UserRepository } from "../repositories/auth.repository";
-import { CreateUserDto, LoginUserDto } from "../dtos/user.dto";
+import { CreateUserDto, LoginUserDto, UpdateUserDto } from "../dtos/user.dto";
 import bcryptjs from "bcryptjs";
 import { HttpError } from "../errors/http-error";
 import jwt from "jsonwebtoken";
@@ -55,5 +55,29 @@ export class AuthService{
         }
         return user;
     }
-    
+
+    async updateUser(userId: string, data: UpdateUserDto){
+        const user = await userRepository.getUserById(userId);
+        if(!user){
+            throw new HttpError(404, "User not found");
+        }
+        if(user.email !== data.email){
+            const emailExists = await userRepository.getUserByEmail(data.email!);
+            if(emailExists){
+                throw new HttpError(409, "Email already exists");
+            }
+        }
+        if(user.username !== data.username){
+            const usernameExists = await userRepository.getUserByUsername(data.username!);
+            if(usernameExists){
+                throw new HttpError(409, "Username already exists");
+            }
+        }
+        if(data.password){
+            const hashedPassword = await bcryptjs.hash(data.password, 10);
+            data.password = hashedPassword;
+        }
+        const updatedUser = await userRepository.updateUserById(userId, data);
+        return updatedUser;
+    }
 }

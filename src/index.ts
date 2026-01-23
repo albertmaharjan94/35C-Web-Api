@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import { PORT } from './config';
 import cors from 'cors';
+import path from 'path';
+
 dotenv.config();
 // can use env variables below this
 console.log(process.env.PORT);
@@ -21,6 +23,8 @@ let corsOptions = {
 }
 // origin: "*", // allow all domains
 app.use(cors(corsOptions));
+
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 // const PORT: number = 3000;
 
