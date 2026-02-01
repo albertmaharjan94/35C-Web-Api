@@ -14,6 +14,8 @@ console.log(process.env.PORT);
 import  bookRoutes  from './routes/book.route';
 import authRoutes from './routes/auth.route';
 import adminUserRoute from './routes/admin/user.route';
+import blogRoutes from './routes/blog.route';
+
 const app: Application = express();
 
 let corsOptions = {
@@ -30,13 +32,12 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use('/api/blogs', blogRoutes);
 app.get('/', (req: Request, res: Response) => {
     res.send('Hello, World!');
 });
 app.use('/api/books', bookRoutes);
 app.use('/api/auth', authRoutes);
-
 app.use('/api/admin/users', adminUserRoute);
 // Task 26 DEC
 // create two api routes for admin to manage users
