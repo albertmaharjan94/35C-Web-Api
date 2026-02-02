@@ -15,6 +15,7 @@ import  bookRoutes  from './routes/book.route';
 import authRoutes from './routes/auth.route';
 import adminUserRoute from './routes/admin/user.route';
 import blogRoutes from './routes/blog.route';
+import adminBlogRouter from './routes/admin/blog.route';
 
 const app: Application = express();
 
@@ -25,14 +26,12 @@ let corsOptions = {
 }
 // origin: "*", // allow all domains
 app.use(cors(corsOptions));
-
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
-
 // const PORT: number = 3000;
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api/blogs', blogRoutes);
+app.use('/api/admin/blogs', adminBlogRouter);
 app.get('/', (req: Request, res: Response) => {
     res.send('Hello, World!');
 });
