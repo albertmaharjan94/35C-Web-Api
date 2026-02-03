@@ -1,0 +1,46 @@
+import express , { Application, Request, Response } from 'express';
+import { connectDB } from './database/mongodb';
+import dotenv from 'dotenv';
+import bodyParser from 'body-parser';
+import { PORT } from './config';
+import cors from 'cors';
+import path from 'path';
+
+dotenv.config();
+// can use env variables below this
+console.log(process.env.PORT);
+// .env -> PORT=5050
+
+import  bookRoutes  from './routes/book.route';
+import authRoutes from './routes/auth.route';
+import adminUserRoute from './routes/admin/user.route';
+import blogRoutes from './routes/blog.route';
+import adminBlogRouter from './routes/admin/blog.route';
+
+const app: Application = express();
+
+let corsOptions = {
+    origin: ["http://localhost:3000", "http://localhost:3003"],
+    // list of domains allowed to access the server
+    // frontend domain/url
+}
+// origin: "*", // allow all domains
+app.use(cors(corsOptions));
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+// const PORT: number = 3000;
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/api/blogs', blogRoutes);
+app.use('/api/admin/blogs', adminBlogRouter);
+app.get('/', (req: Request, res: Response) => {
+    res.send('Hello, World!');
+});
+app.use('/api/books', bookRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/admin/users', adminUserRoute);
+// Task 26 DEC
+// create two api routes for admin to manage users
+// 1. GET /api/admin/users - get all users
+// 2. GET /api/admin/users/:userid - get user by id
+
+export default app;
