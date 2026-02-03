@@ -8,5 +8,6 @@ adminBlogRouter.use(authorizedMiddelWare);
 adminBlogRouter.use(adminMiddelware);
 
 adminBlogRouter.get("/", adminBlogController.getAllBlogs);
+adminBlogRouter.delete("/:id", adminBlogController.deleteOneBlog);
 
 export default adminBlogRouter;
