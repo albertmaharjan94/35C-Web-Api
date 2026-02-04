@@ -17,4 +17,8 @@ router.put(
     uploads.single('image'),
     authController.updateUser
 )
+
+router.post("/request-password-reset", authController.sendResetPasswordEmail);
+router.post("/reset-password/:token", authController.resetPassword);
+
 export default router;
